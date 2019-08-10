@@ -20,7 +20,7 @@ class RegisterSerializer(serializers.ModelSerializer, Validators):
         confirm_password = data.get('confirm_password', None)
         if data['password'] != confirm_password:
             raise serializers.ValidationError(
-                "Password and confirm password don't match."
+                {"Password": "Password and confirm password don't match."}
             )
         return data
 
