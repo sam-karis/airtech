@@ -3,7 +3,8 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 # local imports
-from airtech.apps.authentication.serializers import RegisterSerializer
+from airtech.apps.authentication.serializers import (LoginSerializer,
+                                                     RegisterSerializer)
 
 
 class RegisterUserAPIView(APIView):
@@ -17,8 +18,26 @@ class RegisterUserAPIView(APIView):
         serializer.is_valid(raise_exception=True)
         serializer.save()
 
-        message = {
+        response = {
             'message': 'User registered successfully.',
-            'data': serializer.data
+            'user_data': serializer.data
         }
-        return Response(message, status.HTTP_201_CREATED)
+        return Response(response, status.HTTP_201_CREATED)
+
+
+class LoginUserAPIView(APIView):
+    '''
+    Handles user login
+    '''
+    serializer_class = LoginSerializer
+
+    def post(self, request):
+        user = request.data
+        serializer = self.serializer_class(data=user)
+        serializer.is_valid(raise_exception=True)
+        response = {
+            'message': 'Login is successfully.',
+            'user_data': serializer.data
+        }
+
+        return Response(response, status=status.HTTP_200_OK)
