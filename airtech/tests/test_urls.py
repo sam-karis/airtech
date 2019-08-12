@@ -1,4 +1,4 @@
-from django.urls import reverse, resolve
+from django.urls import resolve, reverse
 
 
 class TestUrls():
@@ -12,4 +12,9 @@ class TestUrls():
     def test_register_url(self):
         # test register url
         path = reverse('authentication:register_user')
-        assert path == '/api/users/register/'
+        assert path == '/api/v1/auth/register/'
+
+    def test_login_url(self):
+        # test login url
+        path = reverse('authentication:login_user')
+        assert path == '/api/v1/auth/login/'

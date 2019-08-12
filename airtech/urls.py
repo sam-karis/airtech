@@ -20,7 +20,7 @@ from airtech.views import IndexAPIView
 
 urlpatterns = [
     path('', IndexAPIView.as_view(), name='index'),
-    path('api/users/', include('airtech.apps.authentication.urls',
-                               namespace='authentication')),
+    path('api/v1/auth/', include('airtech.apps.authentication.urls',
+                                 namespace='authentication')),
     path('admin/', admin.site.urls),
 ]
