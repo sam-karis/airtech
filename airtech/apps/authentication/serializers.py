@@ -3,7 +3,8 @@ from rest_framework import serializers, status
 from rest_framework.exceptions import AuthenticationFailed
 
 # local imports
-from airtech.apps.authentication.models import User
+from airtech.apps.authentication.models import Profile, User
+from airtech.helpers.upload_cloudinary import upload_file
 from airtech.helpers.validators import Validators
 
 
@@ -34,9 +35,9 @@ class RegisterSerializer(serializers.ModelSerializer, Validators):
 
     class Meta:
         model = User
-        fields = ['first_name', 'last_name', 'email', 'username', 'is_verified',
-                  'password', 'access_token', 'confirm_password', 'created_at',
-                  'updated_at'
+        fields = ['first_name', 'last_name', 'email', 'username',
+                  'is_verified', 'access_token', 'password',
+                  'confirm_password', 'created_at', 'updated_at'
                   ]
         read_only_fields = ('created_at', 'updated_at')
 
@@ -75,3 +76,27 @@ class LoginSerializer(serializers.Serializer):
             'access_token': user.token
         }
         return user_detail
+
+
+class ProfileSerializer(serializers.ModelSerializer):
+    """
+    serializers for user profile
+    """
+    username = serializers.CharField(source='user.username', required=False)
+    profile_image = serializers.ImageField(write_only=True, required=False)
+
+    class Meta:
+        model = Profile
+        fields = (
+            'username', 'bio', 'image_url', 'country', 'city', 'company',
+            'profile_image', 'phone', 'created_at', 'updated_at'
+        )
+        read_only_fields = ('created_at', 'updated_at')
+
+    def save(self):
+        image = self.validated_data.pop(
+            'profile_image', None) or self.validated_data.get('image_url')
+        if image is not None:
+            self.validated_data['image_url'] = upload_file(
+                image) or self.instance.image_url
+        super(ProfileSerializer, self).save()
