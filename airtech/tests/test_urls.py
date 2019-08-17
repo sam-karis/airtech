@@ -33,3 +33,8 @@ class TestUrls():
         # test profile image url
         path = urls['profile_image_url']
         assert path == '/api/v1/auth/users/profiles/image/'
+
+    def test_flights_url(self, urls):
+        # test flights url
+        path = urls['flight_url']
+        assert path == '/api/v1/flights/'

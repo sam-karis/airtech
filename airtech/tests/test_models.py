@@ -2,6 +2,7 @@ import pytest
 
 # local import
 from airtech.apps.authentication.models import Profile, User
+from airtech.apps.flights.models import Flight
 
 
 @pytest.mark.django_db
@@ -22,3 +23,11 @@ class TestModels():
     def test_profile_str_method(self, user):
         # Test __str__ method in profile model works
         assert str(user.profile) == 'testuser'
+
+    def test_flights(self, flight):
+        # Test flight model
+        assert isinstance(flight, Flight)
+
+    def test_flight_str_method(self, flight):
+        # Test __str__ method in profile model works
+        assert str(flight) == 'Nairobi - Kigali'
