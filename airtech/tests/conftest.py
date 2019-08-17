@@ -4,6 +4,7 @@ from django.urls import reverse
 from mixer.backend.django import mixer
 
 from airtech.apps.authentication.views import RegisterUserAPIView
+from airtech.helpers.upload_cloudinary import default_profile_url
 
 
 @pytest.fixture
@@ -14,8 +15,13 @@ def factory():
 @pytest.fixture
 def urls():
     yield {
+        'index_url': reverse('index'),
         'register_url': reverse('authentication:register_user'),
-        'login_url': reverse('authentication:login_user')
+        'login_url': reverse('authentication:login_user'),
+        'profile_url': reverse('authentication:profiles'),
+        'profile_user_url': reverse(
+            'authentication:user_profile', kwargs={'username': 'testuser'}),
+        'profile_image_url': reverse('authentication:delete_image')
     }
 
 
@@ -37,6 +43,14 @@ def user():
     )
 
 
+@pytest.fixture()
+def another_user():
+    yield mixer.blend(
+        'authentication.User', username='another_user',
+        email='another_user@example.com', password='dummyPass1#'
+    )
+
+
 @pytest.fixture
 def user_login_data():
     yield {'email': 'test@example.com', 'password': 'dummyPass1#'}
@@ -54,3 +68,23 @@ def register_user(factory, urls, user_data):
         content_type='application/json'
     )
     yield RegisterUserAPIView.as_view()(request)
+
+
+@pytest.fixture
+def user_profile_data():
+    yield {
+        'country': 'Kenya',
+        'city': 'Nairobi',
+        'image_url': default_profile_url,
+        'company': 'Andela Kenya'
+    }
+
+
+# @pytest.fixture
+# def access_token(factory, urls, user_login_data):
+#     request = factory.post(
+#         urls['login_url'], user_login_data,
+#         content_type='application/json'
+#     )
+#     response = LoginUserAPIView.as_view()(request)
+#     yield response.data['user_data']['access_token']
