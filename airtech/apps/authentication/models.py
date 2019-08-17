@@ -7,8 +7,11 @@ from django.contrib.auth.models import (AbstractBaseUser, PermissionsMixin,
                                         UserManager)
 from django.db import models
 
+from airtech.helpers.upload_cloudinary import default_profile_url
+from airtech.models import BaseModel
 
-class User(AbstractBaseUser, PermissionsMixin):
+
+class User(AbstractBaseUser, PermissionsMixin, BaseModel):
     first_name = models.CharField(max_length=255, blank=True)
     last_name = models.CharField(max_length=255, blank=True)
     email = models.EmailField(db_index=True, unique=True)
@@ -17,8 +20,6 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField(default=True)
     is_verified = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
     # The `USERNAME_FIELD` property tells us which field we will use to log in.
     # In this case, we want that to be the email field.
     USERNAME_FIELD = 'email'
@@ -45,4 +46,20 @@ class User(AbstractBaseUser, PermissionsMixin):
                 'exp': date_time.now() + timedelta(days=7)
             }, settings.SECRET_KEY, algorithm='HS256'
         )
-        return token
+        return token.decode('utf-8')
+
+
+class Profile(BaseModel):
+    """
+    create a user profile model
+    """
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    country = models.CharField(max_length=100, blank=True)
+    city = models.CharField(max_length=100, blank=True)
+    company = models.CharField(max_length=100, blank=True)
+    phone = models.CharField(max_length=30, blank=True)
+    bio = models.TextField(blank=True)
+    image_url = models.URLField(default=default_profile_url)
+
+    def __str__(self):
+        return str(self.user.username)
