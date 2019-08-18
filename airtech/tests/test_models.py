@@ -29,5 +29,5 @@ class TestModels():
         assert isinstance(flight, Flight)
 
     def test_flight_str_method(self, flight):
-        # Test __str__ method in profile model works
+        # Test __str__ method in flight model works
         assert str(flight) == 'Nairobi - Kigali'
