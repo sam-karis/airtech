@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'cloudinary',
     'airtech.apps.authentication',
+    'airtech.apps.flights',
 ]
 
 MIDDLEWARE = [

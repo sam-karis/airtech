@@ -22,5 +22,7 @@ urlpatterns = [
     path('', IndexAPIView.as_view(), name='index'),
     path('api/v1/auth/', include('airtech.apps.authentication.urls',
                                  namespace='authentication')),
+    path('api/v1/', include('airtech.apps.flights.urls',
+                            namespace='flights')),
     path('admin/', admin.site.urls),
 ]

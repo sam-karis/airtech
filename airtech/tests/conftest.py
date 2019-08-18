@@ -21,7 +21,8 @@ def urls():
         'profile_url': reverse('authentication:profiles'),
         'profile_user_url': reverse(
             'authentication:user_profile', kwargs={'username': 'testuser'}),
-        'profile_image_url': reverse('authentication:delete_image')
+        'profile_image_url': reverse('authentication:delete_image'),
+        'flight_url': reverse('flight:flights'),
     }
 
 
@@ -80,11 +81,8 @@ def user_profile_data():
     }
 
 
-# @pytest.fixture
-# def access_token(factory, urls, user_login_data):
-#     request = factory.post(
-#         urls['login_url'], user_login_data,
-#         content_type='application/json'
-#     )
-#     response = LoginUserAPIView.as_view()(request)
-#     yield response.data['user_data']['access_token']
+@pytest.fixture()
+def flight():
+    yield mixer.blend(
+        'flights.Flight', departure='Nairobi', destination='Kigali'
+    )
