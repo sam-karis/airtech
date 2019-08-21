@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     'cloudinary',
     'airtech.apps.authentication',
     'airtech.apps.flights',
+    'airtech.apps.tickets',
 ]
 
 MIDDLEWARE = [
