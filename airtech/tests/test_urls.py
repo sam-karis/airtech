@@ -38,3 +38,13 @@ class TestUrls():
         # test flights url
         path = urls['flight_url']
         assert path == '/api/v1/flights/'
+
+    def test_tickets_url(self, urls):
+        # test book tickets url
+        path = urls['ticket_url']
+        assert path == '/api/v1/flights/fn-aeiph89oy/tickets/'
+
+    def test_tickets_count_url(self, urls):
+        # test book tickets url
+        path = urls['ticket_count_url']
+        assert path == '/api/v1/flights/fn-aeiph89oy/'

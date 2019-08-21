@@ -23,6 +23,11 @@ def urls():
             'authentication:user_profile', kwargs={'username': 'testuser'}),
         'profile_image_url': reverse('authentication:delete_image'),
         'flight_url': reverse('flight:flights'),
+        'ticket_url': reverse(
+            'tickets:tickets', kwargs={'flight_no': 'fn-aeiph89oy'}),
+        'ticket_count_url': reverse(
+            'tickets:tickets_count', kwargs={'flight_no': 'fn-aeiph89oy'}),
+
     }
 
 
@@ -84,5 +89,19 @@ def user_profile_data():
 @pytest.fixture()
 def flight():
     yield mixer.blend(
-        'flights.Flight', departure='Nairobi', destination='Kigali'
+        'flights.Flight', departure='Nairobi', destination='Kigali',
+        flight_no='fn-aeiph89oy'
     )
+
+
+@pytest.fixture()
+def ticket(flight, user):
+    yield mixer.blend(
+        'tickets.Ticket', flight=flight, traveller=user,
+        departure_date='2019-08-29', ticket_no='tk-aeiph89oy'
+    )
+
+
+@pytest.fixture
+def ticket_data():
+    yield {'departure_date': '2019-09-29', 'seat_number': 'W23'}

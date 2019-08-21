@@ -13,3 +13,10 @@ class TestFlightView():
         response = GetAllFlightsAPIView.as_view()(request)
         assert response.status_code == 200
         assert 'Nairobi' in str(response.data)
+
+    def test_filter_by_date(self, factory, urls):
+        # Test get flights view
+        request = factory.get(urls['flight_url'])
+        response = GetAllFlightsAPIView.as_view()(request)
+        assert response.status_code == 200
+        assert 'Nairobi' in str(response.data)
