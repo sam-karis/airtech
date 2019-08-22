@@ -24,5 +24,7 @@ urlpatterns = [
                                  namespace='authentication')),
     path('api/v1/', include('airtech.apps.flights.urls',
                             namespace='flights')),
+    path('api/v1/flights/', include('airtech.apps.tickets.urls',
+                                    namespace='tickets')),
     path('admin/', admin.site.urls),
 ]
