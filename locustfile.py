@@ -25,14 +25,15 @@ class APIClientBehaviour(TaskSet):
             data=json.dumps({
                 "email": "samkaris75@gmail.com",
                 "password": "TestPass1#"}),
-            headers={'Content-Type': 'application/json'}
+            headers={'Content-Type': 'application/json'},
+            name='login'
         )
         return json.loads(data._content)['user_data']['access_token']
 
     @task(1)
     def index(self):
         # Test index route
-        self.client.get('/')
+        self.client.get('/', name='index')
 
     @task(2)
     def _login(self):
@@ -51,7 +52,8 @@ class APIClientBehaviour(TaskSet):
             headers={
                 'Content-Type': 'application/json',
                 'Authorization': f'Bearer {self.token}'
-            }
+            },
+            name='Book ticket'
         )
 
 
