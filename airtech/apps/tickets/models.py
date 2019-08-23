@@ -20,6 +20,8 @@ class Ticket(BaseModel):
         db_index=True, max_length=100, unique=True,
         default=f'tk-{id_gen()}', editable=False
     )
+    status = models.CharField(max_length=50, default='Awaiting Boarding')
+    notification_sent = models.BooleanField(default=False)
 
     class Meta:
         unique_together = (('flight', 'traveller', 'departure_date'))
