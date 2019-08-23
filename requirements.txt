@@ -16,6 +16,7 @@ Faker==0.9.1
 filelock==3.0.12
 flake8==3.7.8
 importlib-metadata==0.18
+locustio==0.11.0
 Markdown==3.1.1
 mccabe==0.6.1
 mixer==6.1.3
