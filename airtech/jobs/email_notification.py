@@ -25,6 +25,6 @@ def start():
     '''
     scheduler = BackgroundScheduler()
     scheduler.add_job(
-        send_ticket_notification, 'interval', seconds=60
+        send_ticket_notification, 'interval', minutes=5
     )
     scheduler.start()
