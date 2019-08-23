@@ -18,7 +18,7 @@ class Ticket(BaseModel):
     seat_number = models.CharField(max_length=50)
     ticket_no = models.CharField(
         db_index=True, max_length=100, unique=True,
-        default=f'tk-{id_gen()}', editable=False
+        default=id_gen, editable=False
     )
     status = models.CharField(max_length=50, default='Awaiting Boarding')
     notification_sent = models.BooleanField(default=False)
