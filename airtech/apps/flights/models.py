@@ -11,7 +11,7 @@ class Flight(BaseModel):
     plane_category = models.CharField(max_length=255)
     flight_no = models.CharField(
         db_index=True, max_length=100, unique=True,
-        default=f'fn-{id_gen()}', editable=False
+        default=id_gen, editable=False
     )
     departure = models.CharField(max_length=100)
     destination = models.CharField(max_length=100)
