@@ -20,9 +20,4 @@ class Migration(migrations.Migration):
             name='status',
             field=models.CharField(default='Awaiting Boarding', max_length=50),
         ),
-        migrations.AlterField(
-            model_name='ticket',
-            name='ticket_no',
-            field=models.CharField(db_index=True, default='tk-a9tfrtepx', editable=False, max_length=100, unique=True),
-        ),
     ]
